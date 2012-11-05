@@ -73,6 +73,10 @@ class s3fs-c {
       mode => '600',
     }
 
+    file { '/mnt/s3':
+      ensure => directory,
+    }
+    
     file { 's3fs-cache-directory':
       path => '/mnt/s3/cache',
       ensure => directory,
