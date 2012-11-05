@@ -86,7 +86,7 @@ class s3fs-c {
       path        => '/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin',
       creates     => '/usr/local/bin/s3fs',
       logoutput   => on_failure,
-      command     => '/etc/puppet/modules/s3fs/files/bin/install.sh',
+      command     => '/etc/puppet/modules/s3fs-c/files/bin/install.sh',
       require     => [
                        Package['pkg-config'],
                        Package['build-essential'],
