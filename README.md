@@ -65,3 +65,4 @@ There are several areas where this module could be improved. Examples would incl
 * More fine-grained control over mount options
 
 You are welcome to contribute to this project by forking it and submitting pull requests to the project maintainers (organization: iteego, current maintaners: mpemer and mbjarland)
+
