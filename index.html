@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Puppet.s3fs-c : Puppet module for s3fs-c" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Puppet.s3fs-c</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/iteego/puppet.s3fs-c">View on GitHub</a>
+
+          <h1 id="project_title">Puppet.s3fs-c</h1>
+          <h2 id="project_tagline">Puppet module for s3fs-c</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/iteego/puppet.s3fs-c/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/iteego/puppet.s3fs-c/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>iteego/puppet.s3fs-c</h1>
+
+<h2>License</h2>
+
+<pre><code>iteego/puppet.s3fs-c: puppet recipes for use with the s3fs sofware
+                      in debian-based systems.
+
+ Copyright 2012 Iteego, Inc.
+ Author: Marcus Pemer &lt;marcus@iteego.com&gt;
+
+ iteego/puppet.s3fs-c is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+ iteego/puppet.s3fs is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with iteego/puppet.s3fs.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+</code></pre>
+
+<h2>S3fs-c puppet module</h2>
+
+<p>The s3fs-c puppet module allows you to mount Amazon S3 buckets
+as a part of your file system.</p>
+
+<p>You would include the module under your puppet modules directory
+as a git submodule, like so:</p>
+
+<pre><code>cd &lt;your puppet repo&gt;/modules
+git submodule add git@github.com:iteego/puppet.s3fs-c.git s3fs-c
+git submodule update
+</code></pre>
+
+<p>Don't forget to commit your submodule ref in your parent repository!</p>
+
+<h2>Example Usage</h2>
+
+<p>After this is done, you can use the submodule like so:</p>
+
+<pre><code>include s3fs-c
+
+.
+.
+.
+# Run this once:
+s3fs-c::s3fs_installation { 's3fs_installation': }
+
+# Run one of these for each mount point you want
+# note that the buckets have to exist
+# the module does not automatically create them...
+#
+s3fs-c::s3fs_mount { 'some-unique-name-of-your-choice':
+  bucket            =&gt; '&lt;YOUR BUCKET NAME&gt;',
+  access_key        =&gt; '&lt;YOUR ACCESS KEY&gt;',
+  secret_access_key =&gt; '&lt;YOUR SECRET ACCESS KEY&gt;',
+  owner             =&gt; '&lt;YOUR DESIRED OWNER USER NAME OF MOUNT POINT&gt;',
+  group             =&gt; '&lt;YOUR DESIRED OWNER GROUP NAME OF MOUNT POINT&gt;',
+  mode              =&gt; '&lt;YOUR DESIRED PERMISSIONS OF MOUNT POINT&gt;',
+}
+</code></pre>
+
+<p>After the resource has been put in place by puppet, assuming your credentials
+were correct, you will have a mounted bucket at /mnt/s3/&lt;bucket-name&gt;</p>
+
+<h2>Future Improvements</h2>
+
+<p>There are several areas where this module could be improved. Examples would include:</p>
+
+<ul>
+<li>Support for other Operating systems than the Debian-based Linux distributions</li>
+<li>More fine-grained control over mount options</li>
+</ul><p>You are welcome to contribute to this project by forking it and submitting pull requests to the project maintainers (organization: iteego, current maintaners: mpemer and mbjarland)</p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Puppet.s3fs-c maintained by <a href="https://github.com/iteego">iteego</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
