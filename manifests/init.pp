@@ -42,30 +42,18 @@ class s3fs-c {
   define s3fs_installation
   {
     package {
-      'pkg-config':
-        ensure => present,
-        require => Exec['aptgetupdate'];
-      'build-essential':
-        ensure => present,
-        require => Exec['aptgetupdate'];
-      'fuse-utils':
-        ensure => present,
-        require => Exec['aptgetupdate'];
-      'mime-support':
-        ensure => present,
-        require => Exec['aptgetupdate'];
-      'libfuse-dev':
-        ensure => present,
-        require => Exec['aptgetupdate'];
-      'libcurl4-openssl-dev':
-        ensure => present,
-        require => Exec['aptgetupdate'];
-      'libxml2-dev':
-        ensure => present,
-        require => Exec['aptgetupdate'];
-      'libcrypto++-dev':
-        ensure => present,
-        require => Exec['aptgetupdate'];
+      [
+				'pkg-config',
+				'fuse-utils',
+				'libfuse-dev',
+				'libxml2-dev',
+				'mime-support',
+				'build-essential',
+				'libcrypto++-dev',
+				'libcurl4-openssl-dev',
+			]:
+			ensure => present,
+			require => Exec['aptgetupdate'],
     }
 
     file { 'aws-creds-file':
