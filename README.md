@@ -31,7 +31,7 @@ as a git submodule, like so:
     git submodule add git@github.com:iteego/puppet.s3fs-c.git s3fs-c
     git submodule update
 
-Don't forget to commit your submodule ref in your parent repository
+Don't forget to commit your submodule ref in your parent repository!
 
 ## Example Usage
 
@@ -53,7 +53,11 @@ After this is done, you can use the submodule like so:
       bucket            => '<YOUR BUCKET NAME>',
       access_key        => '<YOUR ACCESS KEY>',
       secret_access_key => '<YOUR SECRET ACCESS KEY>',
+      owner             => '<YOUR DESIRED OWNER USER NAME OF MOUNT POINT>',
+      group             => '<YOUR DESIRED OWNER GROUP NAME OF MOUNT POINT>',
+      mode              => '<YOUR DESIRED PERMISSIONS OF MOUNT POINT>',
     }
+
 
 After the resource has been put in place by puppet, assuming your credentials
 were correct, you will have a mounted bucket at /mnt/s3/\<bucket-name\>
