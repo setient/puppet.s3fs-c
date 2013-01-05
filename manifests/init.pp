@@ -112,8 +112,8 @@ class s3fs-c {
     }
 
     # Calculate our uid and gid
-    $uid=uid($owner)
-    $gid=gid($group)
+    $uid = uid($owner)
+    $gid = gid($group)
 
     mount { "s3fs-mount-$bucket":
       name     => $name,
