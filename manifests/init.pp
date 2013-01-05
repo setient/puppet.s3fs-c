@@ -100,21 +100,12 @@ class s3fs-c {
                  ],
     }
 
-#    line { "fstab-$bucket":
-#      file    => '/etc/fstab',
-#      line    => "s3fs#$bucket  $name     fuse    defaults,noatime,uid=$uid,gid=$gid,allow_other 0 0",
-#      #line    => "s3fs#$bucket  $name     fuse    defaults,noatime,uid=$uid,gid=$gid,allow_other,use_cache=/mnt/s3/cache 0 0",
-#      require => [
-#                   File["aws-creds-file"],
-#                 ],
-#    }
-
     file { "$name":
+      ensure  => directory,
       path    => "$name",
       owner   => "$owner",
       group   => "$group",
       mode    => "$mode",
-      ensure  => directory,
       require => [
                    Exec["s3fs-install"],
                  ],
@@ -133,18 +124,6 @@ class s3fs-c {
                     File["$name"],
                   ],
     }
-
-#    exec { "s3fs-mount-$bucket":
-#      path      => '/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin',
-#      onlyif    => "/bin/df $name 2>&1 | tail -1 | /bin/grep -E '^s3fs' -qv",
-#      logoutput => on_failure,
-#      #command   => "s3fs $bucket $name -o default_permissions -o use_cache=/mnt/s3/cache",
-#      command   => "mount $name",
-#      require   => [
-#                     Line["aws-creds-$bucket"],
-#                     File["$name"],
-#                   ],
-#    }
 
   }
 
