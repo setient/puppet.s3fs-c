@@ -127,7 +127,7 @@ class s3fs-c {
       ensure   => mounted,
       fstype   => fuse,
       options  => "defaults,noatime,uid=$uid,gid=$gid,allow_other",
-      remounts => true,
+      remounts => false,
       require  => [
                     Line["aws-creds-$bucket"],
                     File["$name"],
