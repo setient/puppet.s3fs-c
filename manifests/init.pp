@@ -92,6 +92,10 @@ class s3fs-c {
 
   define s3fs_mount ($bucket, $owner='root', $group='root', $mode='0700', $access_key, $secret_access_key )
   {
+
+    #TODO: This recipe has the potential to create multiple lines
+    #      for the same bucket! A better approach would be to use
+    #      an exec with the "sed -ie 's/pattern/pattern'" instead
     line { "aws-creds-$bucket":
       file    => '/etc/passwd-s3fs',
       line    => "$bucket:$access_key:$secret_access_key",
