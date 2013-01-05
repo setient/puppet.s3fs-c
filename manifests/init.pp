@@ -90,7 +90,7 @@ class s3fs-c {
 
   }
 
-  define s3fs_mount ($bucket, $owner='root', $uid=0, $group='root', $gid=0, $mode='0700', $access_key, $secret_access_key )
+  define s3fs_mount ($bucket, $owner='root', $group='root', $mode='0700', $access_key, $secret_access_key )
   {
     line { "aws-creds-$bucket":
       file    => '/etc/passwd-s3fs',
@@ -110,6 +110,10 @@ class s3fs-c {
                    Exec["s3fs-install"],
                  ],
     }
+
+    # Calculate our uid and gid
+    $uid=uid($owner)
+    $gid=gid($group)
 
     mount { "s3fs-mount-$bucket":
       name     => $name,
