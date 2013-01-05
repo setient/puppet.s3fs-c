@@ -138,12 +138,12 @@ class s3fs-c {
       device   => "s3fs#$bucket",
       ensure   => mounted,
       fstype   => fuse,
-      optiones => "defaults,noatime,uid=$uid,gid=$gid,allow_other",
+      options  => "defaults,noatime,uid=$uid,gid=$gid,allow_other",
       remounts => true,
-      require   => [
-                     Line["aws-creds-$bucket"],
-                     File["$name"],
-                   ],
+      require  => [
+                    Line["aws-creds-$bucket"],
+                    File["$name"],
+                  ],
     }
 
 #    exec { "s3fs-mount-$bucket":
