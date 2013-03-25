@@ -133,7 +133,7 @@ class s3fs-c {
       options  => "defaults,noatime,uid=$uid,gid=$gid,allow_other",
       remounts => false,
       require  => [
-                    Line["aws-creds-$bucket"],
+                    Aws_Bucket_Keys["aws-creds-$bucket"],
                     File["$name"],
                   ],
     }
