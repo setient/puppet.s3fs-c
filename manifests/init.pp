@@ -30,7 +30,7 @@ class s3fs-c {
         exec { "/bin/echo '${bucket}:${key}:${secret}' >> '${file}'":
           unless => "/bin/grep -q '^${bucket}:' '${file}'",
         }
-        exec { "sed -i '' -e 's/${bucket}:.*:.*/${bucket}:${key}:${secret}' '${file}'":
+        exec { "/bin/sed -i '' -e 's/${bucket}:.*:.*/${bucket}:${key}:${secret}' '${file}'":
           unless => "/bin/grep -q '^${bucket}:${key}:${secret}' '${file}'",
         }
       }
