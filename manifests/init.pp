@@ -1,12 +1,12 @@
 # iteego/puppet.s3fs: puppet recipes for use with the s3fs sofware
 #                     in debian-based systems.
 #
-# Copyright 2012 Iteego, Inc.
+# Copyright 2012 Marcus Pemer and Iteego, Inc.
 # Author: Marcus Pemer <marcus@iteego.com>
 #
-# This file is part of iteego/puppet.s3fs.
+# This file is part of iteego/puppet.s3fs-c.
 #
-# iteego/puppet.s3fs is free software: you can redistribute it and/or modify
+# iteego/puppet.s3fs-c is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
@@ -21,19 +21,22 @@
 
 class s3fs-c {
 
-  define line( $file, $line, $ensure = 'present' ) {
+  define aws_bucket_keys( $file, $bucket, $key, $secret, $ensure = 'present' ) {
     case $ensure {
       default: {
         err ( "unknown ensure value ${ensure}" )
       }
       present: {
-        exec { "/bin/echo '${line}' >> '${file}'":
-          unless => "/bin/grep -qFx '${line}' '${file}'",
+        exec { "/bin/echo '${bucket}:${key}:${secret}' >> '${file}'":
+          unless => "/bin/grep -q '^${bucket}:' '${file}'",
+        }
+        exec { "sed -i '' -e 's/${bucket}:.*:.*/${bucket}:${key}:${secret}' '${file}'":
+          unless => "/bin/grep -q '^${bucket}:${key}:${secret}' '${file}'",
         }
       }
       absent: {
-        exec { "/bin/grep -vFx '${line}' '${file}' | /usr/bin/tee '${file}' > /dev/null 2>&1":
-          onlyif => "/bin/grep -qFx '${line}' '${file}'",
+        exec { "/bin/grep -v '^${bucket}:${key}:${secret}' '${file}' | /usr/bin/tee '${file}' > /dev/null 2>&1":
+          onlyif => "/bin/grep -q '^${bucket}:${key}:${secret}' '${file}'",
         }
       }
     }
@@ -96,9 +99,11 @@ class s3fs-c {
     #TODO: This recipe has the potential to create multiple lines
     #      for the same bucket! A better approach would be to use
     #      an exec with the "sed -ie 's/pattern/pattern'" instead
-    line { "aws-creds-$bucket":
+    aws_bucket_keys { "aws-creds-$bucket":
       file    => '/etc/passwd-s3fs',
-      line    => "$bucket:$access_key:$secret_access_key",
+      bucket  => "$bucket",
+      key     => "$access_key",
+      secret  => "$secret_access_key",
       require => [
                    File["aws-creds-file"],
                  ],

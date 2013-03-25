@@ -3,7 +3,7 @@
     iteego/puppet.s3fs-c: puppet recipes for use with the s3fs sofware
                           in debian-based systems.
     
-     Copyright 2012 Iteego, Inc.
+     Copyright 2012 Marcus Pemer and Iteego, Inc.
      Author: Marcus Pemer <marcus@iteego.com>
     
      iteego/puppet.s3fs-c is free software: you can redistribute it and/or modify
