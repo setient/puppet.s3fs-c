@@ -27,11 +27,14 @@ class s3fs-c {
         err ( "unknown ensure value ${ensure}" )
       }
       present: {
-        exec { "/bin/echo '${bucket}:${key}:${secret}' >> '${file}'":
-          unless => "/bin/grep -q '^${bucket}:' '${file}'",
+        exec { "either-write-${bucket}-${key}-${secret}":
+          command => "/bin/echo '${bucket}:${key}:${secret}' >> '${file}'",
+          unless  => "/bin/grep -q '^${bucket}:' '${file}'",
         }
-        exec { "/bin/sed --in-place 's/${bucket}:.*:.*/${bucket}:${key}:${secret}/' '${file}'":
-          unless => "/bin/grep -q '^${bucket}:${key}:${secret}' '${file}'",
+        exec { "or-update-${bucket}-${key}-${secret}":
+          command => "/bin/sed --in-place 's/${bucket}:.*:.*/${bucket}:${key}:${secret}/' '${file}'",
+          unless  => "/bin/grep -q '^${bucket}:${key}:${secret}' '${file}'",
+          require => Exec["either-write-${bucket}-${key}-${secret}"],
         }
       }
       absent: {
